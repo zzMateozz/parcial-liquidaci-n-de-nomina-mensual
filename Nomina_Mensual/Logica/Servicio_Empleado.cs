@@ -2,6 +2,7 @@
 using Entidades;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,11 +15,11 @@ namespace Logica
     {
         Archivos archivos = new Archivos();
         List<Empleado> empleados = new List<Empleado>();
-        
-        public bool Casillas_VaciasEstado(RadioButton activo,RadioButton inactivo)
+
+        public bool Casillas_VaciasEstado(RadioButton activo, RadioButton inactivo)
         {
             bool verificar = false;
-            if (activo.Checked==false && inactivo.Checked == false)
+            if (activo.Checked == false && inactivo.Checked == false)
             {
                 MessageBox.Show("Datos vacios en ESTADO");
                 verificar = true;
@@ -38,7 +39,7 @@ namespace Logica
         public bool Casilla_IdVacia(TextBox id)
         {
             bool Verificar_ID = false;
-            if(id.Text == "")
+            if (id.Text == "")
             {
                 Verificar_ID = true;
                 MessageBox.Show("Datos vacios en IDENTIFIACION");
@@ -57,24 +58,24 @@ namespace Logica
         }
 
 
-        public void Registrar(bool identificacion,bool nombre,bool salario,bool estado,Empleado empleado,TextBox id)
+        public void Registrar(bool identificacion, bool nombre, bool salario, bool estado, Empleado empleado, TextBox id)
         {
             if (identificacion == false)
             {
-                if(nombre == false)
+                if (nombre == false)
                 {
-                    if(salario == false)
+                    if (salario == false)
                     {
-                        if(estado == false)
+                        if (estado == false)
                         {
-                            GuardarEmpleado(id.Text,empleado);
+                            GuardarEmpleado(id.Text, empleado);
                             MessageBox.Show("Empleado Registrado");
                         }
                     }
                 }
             }
         }
-        public void GuardarEmpleado(string id,Empleado empleado)
+        public void GuardarEmpleado(string id, Empleado empleado)
         {
             bool encontrado = false;
             try
@@ -91,7 +92,7 @@ namespace Logica
                         foreach (var item in empleados)
                         {
 
-                            if (item.N_Identificacion == id)
+                            if (item.N_Identificacion.Equals(id))
                             {
                                 Console.WriteLine("Empleado ya existe");
                                 encontrado = true;
@@ -115,7 +116,50 @@ namespace Logica
                 Console.WriteLine("Error al guardar Empleado");
             }
         }
+        public void FilterDataGridView(TextBox filtro, DataGridView tabla)
+        {
+            string nameFilter = filtro.Text;
+            string stateFilter = filtro.Text;
+            DataTable dataSource = (DataTable)tabla.DataSource;
+            if (dataSource != null)
+            {
+                dataSource.DefaultView.RowFilter = $"Nombre LIKE '%{nameFilter}%' OR Estado LIKE '%{stateFilter}%'";
+            }
+        }
+        public Empleado BuscarId(string id)
+        {
+            foreach (var item in empleados)
+            {
+                if (item.Nombre == id || item.Estado == id)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
 
+        public ConsultaPersonaResponse ConsultarTodos()
+        {
+
+            try
+            {
+                List<Empleado> empleado = archivos.GetAll();
+                if (empleado != null)
+                {
+                    return new ConsultaPersonaResponse(empleado);
+                }
+                else
+                {
+                    return new ConsultaPersonaResponse("La Persona buscada no se encuentra Registrada");
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                return new ConsultaPersonaResponse("Error de Aplicacion: " + e.Message);
+            }
+        }
         void Refresh()
         {
             try
@@ -125,6 +169,24 @@ namespace Logica
             catch (Exception)
             {
 
+            }
+        }
+        public class ConsultaPersonaResponse
+        {
+            public List<Empleado> Empleados { get; set; }
+            public string Message { get; set; }
+            public bool Encontrado { get; set; }
+
+            public ConsultaPersonaResponse(List<Empleado> empleado)
+            {
+                Empleados = new List<Empleado>();
+                Empleados = empleado;
+                Encontrado = true;
+            }
+            public ConsultaPersonaResponse(string message)
+            {
+                Message = message;
+                Encontrado = false;
             }
         }
     }

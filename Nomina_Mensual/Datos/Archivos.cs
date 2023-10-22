@@ -25,7 +25,12 @@ namespace Datos
             empleados.N_Identificacion = datos[0];
             empleados.Nombre = datos[1];
             empleados.Salario = float.Parse(datos[2]);
+            empleados.Estado = datos[3];
             return empleados;
+        }
+        public List<Empleado> FiltrarEmpleado(string empleado)
+        {
+            return GetAll().Where(p => p.Nombre.Equals(empleado)).ToList();
         }
 
         public List<Empleado> GetAll()
@@ -45,27 +50,6 @@ namespace Datos
             {
 
                 return null;
-            }
-        }
-
-        public void EliminarEmpleado(List<Empleado> empleados)
-        {
-            string rutatemp = "Temporal.txt";
-            try
-            {
-                StreamWriter sw = new StreamWriter(rutatemp, true);
-                foreach (var item in empleados)
-                {
-                    sw.WriteLine(item.ToString());
-                }
-                sw.Close();
-                File.Delete(ruta);
-                File.Move(rutatemp, ruta);
-            }
-            catch (Exception)
-            {
-
-                throw;
             }
         }
     }
