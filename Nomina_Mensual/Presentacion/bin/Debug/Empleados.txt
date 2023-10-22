@@ -1,0 +1,5 @@
+101 ;Luis Fernando Diaz;908526
+102;Radamel Falcao García ;1E+07
+103 ;Yerry Fernando Mina;1,35E+07
+104 ;David Ospina Ramírez;2500000
+105 ;Juan Guillermo Cuadrado ;5000000

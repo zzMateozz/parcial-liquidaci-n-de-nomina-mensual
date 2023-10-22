@@ -1,0 +1,6 @@
+C:\Users\Angel Barrueto\Documents\PARCIAL CORTE 3\Nomina_Mensual\Entidades\bin\Debug\Entidades.dll
+C:\Users\Angel Barrueto\Documents\PARCIAL CORTE 3\Nomina_Mensual\Entidades\bin\Debug\Entidades.pdb
+C:\Users\Angel Barrueto\Documents\PARCIAL CORTE 3\Nomina_Mensual\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\Angel Barrueto\Documents\PARCIAL CORTE 3\Nomina_Mensual\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\Angel Barrueto\Documents\PARCIAL CORTE 3\Nomina_Mensual\Entidades\obj\Debug\Entidades.dll
+C:\Users\Angel Barrueto\Documents\PARCIAL CORTE 3\Nomina_Mensual\Entidades\obj\Debug\Entidades.pdb
